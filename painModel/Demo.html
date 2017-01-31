@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   Demo.html
+   
+   Copyright 2017 Jessica Switzler <vollyball93@Jessica-Switzlers-MacBook-Pro.local>
+   
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+   
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+   MA 02110-1301, USA.
+   
+   
+-->
+
+<head>
+<meta charset="utf-8" />
+<title>untitled</title>
+<meta name="generator" content="Geany 1.28" />
+</head>
+		<style>
+			body {  
+				margin: 0; 
+				background-color: black; 
+				}
+			canvas { 
+				width: 100%; 
+				height: 100% 
+				}
+		</style>
+		
+<body>
+	<script src= "three.js-master/build/three.js"></script>
+	<script src= "http://threejs.org/examples/js/controls/OrbitControls.js"></script>
+	<script src = "three.js-master/build/OBJLoader.js"></script>
+	<script>
+		
+		
+	var scene, renderer, camera, controls, box, loader;
+	var color1 = new THREE.Color("rgb(17,2,14)");
+	var width= window.innerWidth, height = window.innerHeight;
+		
+		
+	init();
+	myRender();
+	
+	function init(){
+		
+		//Setting up Camera and Scene
+		scene= new THREE.Scene();
+		scene.background = new THREE.Color("rgb(250,250,250 )");
+		camera= new THREE.PerspectiveCamera(45, width/height, 1, 1000);
+		loader = new THREE.OBJLoader();
+		renderer= new THREE.WebGLRenderer();
+		renderer.setSize(width, height);
+		
+		//Orbit Controls
+		controls = new THREE.OrbitControls(camera);
+		controls.enableZoom = false;
+		controls.enablePan = false;
+		controls.keyPanSpeed = 1;
+		console.log(controls);
+		camera.position.z=300;
+		
+		//adding light
+		light = new THREE.AmbientLight(0x404040);
+		scene.add(light);
+		
+		var onProgress = function(object){
+			if(object.lengthComputable){
+				var PercentComplete = object.loaded/ object.total *100;
+				console.log(Math.round(PercentComplete,2) + "% loaded");
+			}
+		};
+		var onError = function(){
+			console.log("error loading model");
+		};
+		
+		loader.load("MaleModel.obj", function(object) {
+			object.traverse( function (child) {
+				if (child instanceof THREE.Mesh){
+					child.material.color = color1;
+				}
+			});
+			object.position.y = -95;
+			scene.add(object);
+		}, onProgress, onError);
+		
+		
+		
+		
+		document.body.appendChild(renderer.domElement);
+		window.addEventListener( 'resize', onWindowResize, false );
+	}
+	
+	function onWindowResize() {
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+		renderer.setSize( window.innerWidth, window.innerHeight );
+	}
+			
+	function myRender(){
+		requestAnimationFrame( myRender );
+		renderer.render( scene, camera );
+	}
+</script>
+		
+</body>
+
+</html>
