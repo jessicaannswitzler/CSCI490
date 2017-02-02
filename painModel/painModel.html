@@ -43,11 +43,18 @@
 	<script src= "three.js-master/build/three.js"></script>
 	<script src= "http://threejs.org/examples/js/controls/OrbitControls.js"></script>
 	<script src = "three.js-master/build/OBJLoader.js"></script>
+	<script src = "three.js-master/build/Detector.js"></script>
+	<script src = "three.js-master/build/CanvasRenderer.js"></script>
+	<script src = "three.js-master/build/Projector.js"></script>
+	<script src = "three.js-master/build/MTLLoader.js"></script>
 	<script>
 		
 		
-	var scene, renderer, camera, controls, box, loader;
-	var color1 = new THREE.Color("rgb(17,2,14)");
+	var scene, renderer, camera;
+	var controls, box, loader, mtlLoader;
+	var targetRotation = 0, targetRotationOnMouseDown = 0;
+	var mouseX = 0, mouseXOnMouseDown = 0; 
+	var material = new THREE.MeshBasicMaterial({color:"rgb(255,224,189)"});
 	var width= window.innerWidth, height = window.innerHeight;
 		
 		
@@ -55,22 +62,23 @@
 	myRender();
 	
 	function init(){
+		//detecting if browser is WebGL compatible 
+		if (Detector.webgl){
+			
+			renderer = new THREE.WebGLRenderer(); ({antialias:true});
+		}
+		else 
+		{
+			renderer = new THREE.CanvasRenderer();
+		}
 		
 		//Setting up Camera and Scene
 		scene= new THREE.Scene();
 		scene.background = new THREE.Color("rgb(250,250,250 )");
 		camera= new THREE.PerspectiveCamera(45, width/height, 1, 1000);
 		loader = new THREE.OBJLoader();
-		renderer= new THREE.WebGLRenderer();
 		renderer.setSize(width, height);
 		
-		//Orbit Controls
-		controls = new THREE.OrbitControls(camera);
-		controls.enableZoom = false;
-		controls.enablePan = false;
-		controls.keyPanSpeed = 1;
-		controls
-		console.log(controls);
 		camera.position.z=300;
 		camera.up.set(0,5,0);
 		
@@ -78,31 +86,116 @@
 		light = new THREE.AmbientLight(0x404040);
 		scene.add(light);
 		
+		
+		var dirLight = new THREE.DirectionalLight( 0x404040 );
+		dirLight.position.set( 0, 0, 1 ).normalize();
+		scene.add( dirLight );
+		
+		var dirLight2 = new THREE.DirectionalLight( 0x404040 );
+		dirLight2.position.set( 0, 0, -1 ).normalize();
+		scene.add(dirLight2);
+		
+		
+		
 		var onProgress = function(object){
 			if(object.lengthComputable){
 				var PercentComplete = object.loaded/ object.total *100;
-				console.log(Math.round(PercentComplete,2) + "% loaded");
+				console.log("model "+ Math.round(PercentComplete,2) + "% loaded");
+			}
+		};
+		var onProgressMtl = function(object){
+			if(object.lengthComputable){
+				var PercentComplete = object.loaded/ object.total *100;
+				console.log("material " + Math.round(PercentComplete,2) + "% loaded");
 			}
 		};
 		var onError = function(){
 			console.log("error loading model");
 		};
 		
-		loader.load("MaleModel.obj", function(object) {
-			object.traverse( function (child) {
-				if (child instanceof THREE.Mesh){
-					child.material.color = color1;
-				}
-			});
-			object.position.y = -95;
-			scene.add(object);
-		}, onProgress, onError);
+		mtlLoader = new THREE.MTLLoader();
+		mtlLoader.load("MaleModel.mtl", function(materials) {
+			
+			materials.preload(); 
+			
+			loader.setMaterials(materials);
+			loader.load("MaleModel.obj", function(object) {
+				/*object.traverse( function (child) {
+					if (child instanceof THREE.Mesh){
+						child.material = materials;
+					}
+				});*/
+				object.position.y = -95;
+				scene.add(object);
+			}, onProgress, onError);},onProgressMtl, onError);
 		
 		
-		
+		document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+		document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+		document.addEventListener( 'touchmove', onDocumentTouchMove, false );
 		
 		document.body.appendChild(renderer.domElement);
 		window.addEventListener( 'resize', onWindowResize, false );
+		
+		
+	}
+	
+	function onDocumentMouseDown() {
+		event.preventDefault();
+		console.log("mouse down");
+		document.addEventListener( 'mousemove', onDocumentMouseMove, false);
+		document.addEventListener( 'mouseup', onDocumentMouseUp, false);
+		document.addEventListener( 'mouseout', onDocumentMouseOut, false);
+		
+		mouseXOnMouseDown = event.clientX - (width/2);
+		console.log(mouseXOnMouseDown);
+		targetRotationOnMouseDown = targetRotation;
+		
+	}
+	
+	function onDocumentMouseMove() {
+		
+		mouseX = event.clientX - (width/2);
+		console.log(mouseX);
+		targetRotation = targetRotationOnMouseDown + (mouseX - mouseXOnMouseDown) * .01;
+		
+	}
+	
+	function onDocumentMouseUp() {
+		console.log("mouse up");
+		
+		document.removeEventListener( 'mousemove', onDocumentMouseMove, false);
+		document.removeEventListener( 'mouseup', onDocumentMouseUp, false);
+		document.removeEventListener( 'mouseout', onDocumentMouseOut, false);
+		
+	}
+	
+	function onDocumentMouseOut() {
+		
+		document.removeEventListener( 'mousemove', onDocumentMouseMove, false);
+		document.removeEventListener( 'mouseup', onDocumentMouseUp, false);
+		document.removeEventListener( 'mouseout', onDocumentMouseOut, false);
+		
+	}
+	
+	function onDocumentTouchStart() {
+		if(event.touches.length == 1){
+			console.log(event.touches.length);
+			event.preventdefault();
+			mouseXOnMouseDown = event.touches[0].pageX - (width/2);
+			targetRotation = targetRotationOnMouseDown + (mouseX - mouseXOnMouseDown) * .01;
+		}
+	}
+	
+	function onDocumentTouchMove() {
+		if(event.touches.length == 1){
+			
+			event.preventdefault();
+			
+			mouseX = event.touches[0].pageX -(width/2);
+			targetRotation = targetRotionOnMouseDown + (mouseX - mouseXOnMouseDown) * .01;
+			
+		}
 	}
 	
 	function onWindowResize() {
@@ -112,8 +205,10 @@
 	}
 			
 	function myRender(){
-		requestAnimationFrame( myRender );
+		scene.rotation.y += targetRotation * .01;
 		renderer.render( scene, camera );
+		requestAnimationFrame( myRender );
+		targetRotation= 0;
 	}
 </script>
 		
