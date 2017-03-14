@@ -88,7 +88,7 @@
 						</div>
                     </li>
 					<li>
-						<a href="index.html#map" onclick="scrollToElement('#map', 400);">Our Shop</a>
+						<a href="index.html#map" id="mapButton">Our Shop</a>
 					</li>
 					<li>
                         <a href="tattoocare.html">Tattoo Care</a>
@@ -97,10 +97,10 @@
                         <a href="pain.html">Pain Model</a>
                     </li>
                     <li>
-                        <a href="index.html#gallery" onclick="scrollToElement('#gallery', 400);">Gallery</a>
+                      <a href="index.html#gallery" id="galleryTopButton">Gallery</a>
                     </li>
                     <li>
-                        <a href="index.html#About" onclick="scrollToElement('#About', 400);">About</a>
+                        <a href="index.html#About" id="aboutTopButton">About</a>
                     </li>
                 </ul>
             </div>
@@ -422,5 +422,25 @@
     <script src="startbootstrap-landing-page-gh-pages/js/bootstrap.min.js"></script>
 
 </body>
+
+<script>
+	$("#aboutTopButton").click(function() {
+    $('html,body').animate({
+        scrollTop: $("#aboutSection").offset().top},
+        'slow');
+	});
+	
+	$("#galleryTopButton").click(function() {
+    $('html,body').animate({
+        scrollTop: $("#gallery").offset().top},
+        'slow');
+	});
+	
+	$("#mapButton").click(function() {
+    $('html,body').animate({
+        scrollTop: $("#mapSection").offset().top},
+        'slow');
+	});
+</script>
 
 </html>

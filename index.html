@@ -88,7 +88,7 @@
 						</div>
                     </li>
 					<li>
-						<a href="#map">Our Shop</a>
+						<a href="#map" id="mapButton">Our Shop</a>
 					</li>
 					<li>
                         <a href="tattoocare.html">Tattoo Care</a>
@@ -97,10 +97,10 @@
                         <a href="pain.html">Pain Model</a>
                     </li>
                     <li>
-                        <a href="index.html#gallery">Gallery</a>
+                        <a href="index.html#gallery" id="galleryTopButton">Gallery</a>
                     </li>
                     <li>
-                        <a href="index.html#About">About</a>
+                        <a href="index.html#About" id="aboutTopButton">About</a>
                     </li>
                 </ul>
             </div>
@@ -145,7 +145,7 @@
    <!-- Insert file contents here for other image slider -->
     <!-- /.content-section-a -->
 
-    <div class="content-section-b">
+    <div class="content-section-b" id="mapSection">
 
         <div class="container">
 
@@ -314,7 +314,7 @@
 	</div>
     <!-- /.content-section-a -->
 
-    <div class="content-section-a">
+    <div class="content-section-a" id="aboutSection">
 
         <div class="container">
 
@@ -408,7 +408,23 @@
 </body>
 
 <script>
+	$("#aboutTopButton").click(function() {
+    $('html,body').animate({
+        scrollTop: $("#aboutSection").offset().top},
+        'slow');
+	});
 	
+	$("#galleryTopButton").click(function() {
+    $('html,body').animate({
+        scrollTop: $("#gallery").offset().top},
+        'slow');
+	});
+	
+	$("#mapButton").click(function() {
+    $('html,body').animate({
+        scrollTop: $("#mapSection").offset().top},
+        'slow');
+	});
 </script>
 
 </html>
