@@ -60,9 +60,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <ul class="nav pull-right">
+               <ul class="nav pull-right">
 				  <li style="padding-top:5px;" id="menuLogin">
-					<a href="#" id="navLogin">Welcome, Guest!</a>
+					<a href="login.php" id="navLogin">Welcome, Guest!</a>
 					<div class="dropdown-menu" style="padding:17px;">
 					  <form class="form" id="formLogin"> 
 						<input name="username" id="username" type="text" placeholder="Username"> 
@@ -426,19 +426,19 @@
 <script>
 	$("#aboutTopButton").click(function() {
     $('html,body').animate({
-        scrollTop: $("#aboutSection").offset().top},
+        scrollTop: $("#aboutSection").offset().top - 50},
         'slow');
 	});
 	
 	$("#galleryTopButton").click(function() {
     $('html,body').animate({
-        scrollTop: $("#gallery").offset().top},
+        scrollTop: $("#gallery").offset().top - 50},
         'slow');
 	});
 	
 	$("#mapButton").click(function() {
     $('html,body').animate({
-        scrollTop: $("#mapSection").offset().top},
+        scrollTop: $("#mapSection").offset().top - 50},
         'slow');
 	});
 </script>
