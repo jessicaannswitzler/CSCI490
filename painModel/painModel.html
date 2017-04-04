@@ -4,243 +4,52 @@
 		<meta charset="utf-8" />
 		<title>untitled</title>
 		<meta name="generator" content="Geany 1.28" />
-		<style>
-			body {  
-				margin: 0; 
-				background-color: black; 
-				}
-			#buttonBar {
-				position: fixed;
-				
-			}
-			#div1 {
-				float: left;
-				<!--width: 75%;-->
-				background-color: blue;
-			}
-			#div2 {
-				float: right;
-				<!--width: 25%;-->
-				background-color: pink;
-			}
-			canvas { 
-				width: 100%; 
-				height: 100% 
-				}
-		</style>
+		<link rel = "stylesheet" type = "text/css" href = "painModel.css">
 	</head>
-<div id = "buttonBar"> 
-		<button id = "maleOrFemaleButton" onclick = "genderHandler()">Switch Gender</button>
-</div>
-<div id = "div1"></div>
 
-<!--<div id= "div2"></div>
-	<script>
-		document.writeln("Hello");
-	</script>-->
-	
-</div>
+<div id = "mainContainer">
+	<div id = "painModelContainer">
 		
+		<div id = "buttonBar"> 
+			<button id = "maleOrFemaleButton">Switch Gender</button>
+		</div>
+		<div id = "painModel">
+			<div id = "frontFacingModel" class = "model"></div>
+			<div id = "backFacingModel" class = "model"></div>
+		</div>
+	</div>
+	<div class = "container">
+		<div id = "painLevelContainer">
+			<div id = "lowPainLevelTitle">LOWEST PAIN
+			</div>
+			<div id = "painLevel">
+				<img src = "painLevel.png" >
+				<div id = "painLevelYellow" class = "colorScale"></div>
+				<div id = "painLevelOrange" class = "colorScale"></div>
+				<div id = "painLevelRed" class = "colorScale"></div>
+				<div id = "painLevelViolet" class = "colorScale"></div>
+			</div>
+			<div id = "highPainLevelTitle">HIGHEST PAIN
+			</div>
+		</div>
+		<div id = "painFacesContainer">
+			<div id = "painFacesTitle">Scroll over temperature bar for illustration!</div>
+			<div id = "painFaces">
+					<div id = "faceYellow" class = "faceScale"></div>
+					<div id = "faceOrange" class = "faceScale"></div>
+					<div id = "faceRed" class = "faceScale"></div>
+					<div id = "faceViolet" class = "faceScale"></div>
+			</div>
+			<div id = "painFacesFooter"></div>
+		</div>
+	</div>
+</div>
 <body>
 	<script src= "three.js-master/build/three.js"></script>
-	<script src= "http://threejs.org/examples/js/controls/OrbitControls.js"></script>
 	<script src = "three.js-master/build/OBJLoader.js"></script>
 	<script src = "three.js-master/build/Detector.js"></script>
 	<script src = "three.js-master/build/CanvasRenderer.js"></script>
-	<script src = "three.js-master/build/Projector.js"></script>
 	<script src = "three.js-master/build/MTLLoader.js"></script>
+	<script src = "painModel.js"></script>
 </body>	
-
-<script>
-	var scene, renderer, camera;
-	var controls, box, loader, mtlLoader;
-	var dirLight, dirLight2;
-	var targetRotation = 0, targetRotationOnMouseDown = 0;
-	var mouseX = 0, mouseXOnMouseDown = 0; 
-	var material = new THREE.MeshBasicMaterial({color:"rgb(255,224,189)"});
-	var width= window.innerWidth, height = window.innerHeight;
-	var div1 = document.getElementById("div1");	
-	var maleModel = true;
-		
-	init();
-	addMaleModel();
-	myRender();
-	
-	function init(){
-		//detecting if browser is WebGL compatible 
-		if (Detector.webgl){
-			
-			renderer = new THREE.WebGLRenderer(); ({antialias:true});
-		}
-		else 
-		{
-			renderer = new THREE.CanvasRenderer();
-		}
-		
-		//Setting up DIV
-		document.body.appendChild(div1);
-		//Setting up Camera and Scene
-		scene= new THREE.Scene();
-		scene.background = new THREE.Color("rgb(250,250,250 )");
-		camera= new THREE.PerspectiveCamera(45, width/height, 1, 1000);
-		loader = new THREE.OBJLoader();
-		renderer.setSize(width,height);
-		camera.position.z=300;
-		camera.up.set(0,5,0);
-		//adding light
-		light = new THREE.AmbientLight(0x404040);
-		scene.add(light);
-		dirLight = new THREE.DirectionalLight( 0x404040 );
-		dirLight.position.set( 0, 0, 1 ).normalize();
-		scene.add( dirLight );
-		dirLight2 = new THREE.DirectionalLight( 0x404040 );
-		dirLight2.position.set( 0, 0, -1 ).normalize();
-		scene.add(dirLight2);
-		//Adding event listeners for model Rotation
-		div1.addEventListener( 'mousedown', onDocumentMouseDown, false );
-		//!!!Add code below for touch screen functionality
-		//div1.addEventListener( 'touchstart', onDocumentTouchStart, false );
-		//div1.addEventListener( 'touchmove', onDocumentTouchMove, false );
-		div1.appendChild(renderer.domElement);
-		window.addEventListener( 'resize', onWindowResize, false );
-	}
-	// Mouse events
-	function onDocumentMouseDown() {
-		event.preventDefault();
-		//adding event listeners when mouse is clicked
-		document.addEventListener( 'mousemove', onDocumentMouseMove, false);
-		document.addEventListener( 'mouseup', onDocumentMouseUp, false);
-		document.addEventListener( 'mouseout', onDocumentMouseOut, false);
-		//calculating placement of mouse when clicked
-		mouseXOnMouseDown = event.clientX - (width/2);
-		targetRotationOnMouseDown = targetRotation;
-	}
-	
-	function onDocumentMouseMove() {
-		//calculating movement of mouse along x axis
-		mouseX = event.clientX - (width/2);
-		//figuring out rotation of model
-		targetRotation = targetRotationOnMouseDown + (mouseX - mouseXOnMouseDown) * .01;	
-	}
-	
-	function onDocumentMouseUp() {
-		//removing event listeners when mouse is no longer pressed down
-		document.removeEventListener( 'mousemove', onDocumentMouseMove, false);
-		document.removeEventListener( 'mouseup', onDocumentMouseUp, false);
-		document.removeEventListener( 'mouseout', onDocumentMouseOut, false);
-	}
-	
-	function onDocumentMouseOut() {
-		//removing event listeners when mouse is moved out of the window
-		document.removeEventListener( 'mousemove', onDocumentMouseMove, false);
-		document.removeEventListener( 'mouseup', onDocumentMouseUp, false);
-		document.removeEventListener( 'mouseout', onDocumentMouseOut, false);
-	}
-	
-	//add below code for touchscreen functionality 
-	/*function onDocumentTouchStart() {
-		if(event.touches.length == 1){
-			event.preventdefault();
-			mouseXOnMouseDown = event.touches[0].pageX - (width/2);
-			targetRotation = targetRotationOnMouseDown + (mouseX - mouseXOnMouseDown) * .01;
-		}
-	}*/
-	
-	/*function onDocumentTouchMove() {
-		if(event.touches.length == 1){
-			
-			event.preventdefault();
-			
-			mouseX = event.touches[0].pageX -(width/2);
-			targetRotation = targetRotionOnMouseDown + (mouseX - mouseXOnMouseDown) * .01;
-			
-		}
-	}*/
-	
-	//adding function for OBJ loaders
-	var onProgress = function(object){
-		if(object.lengthComputable){
-			var PercentComplete = object.loaded/ object.total *100;
-			console.log("model "+ Math.round(PercentComplete,2) + "% loaded");
-		}
-	}
-	
-	var onProgressMtl = function(object){
-		if(object.lengthComputable){
-			var PercentComplete = object.loaded/ object.total *100;
-			console.log("material " + Math.round(PercentComplete,2) + "% loaded");
-		}
-	}
-	
-	var onError = function(){
-		console.log("error loading model");
-	}
-	
-	//adding female model to the scene
-	function addFemaleModel(){	
-		mtlLoader = new THREE.MTLLoader();
-		mtlLoader.load("FemaleModel.mtl", function(materials) {
-			materials.preload(); 
-			loader.setMaterials(materials);
-			loader.load("FemaleModel.obj", function(object) {
-				object.position.y = -9;
-				camera.position.z = 25;
-				object.name = "femaleModel";
-				scene.add(object);
-			}, onProgress, onError);},onProgressMtl, onError);}
-			
-	//adding male model to the scene	
-	function addMaleModel()
-	{
-				
-		mtlLoader = new THREE.MTLLoader();
-		mtlLoader.load("MaleModel.mtl", function(materials) {
-			
-			materials.preload(); 
-			
-			loader.setMaterials(materials);
-			loader.load("MaleModel.obj", function(object) {
-				object.position.y = -95;
-				camera.position.z = 300;
-				object.name = "maleModel";
-				scene.add(object);
-			}, onProgress, onError);},onProgressMtl, onError);
-	}
-	
-	//setting remove object for the Model Event Handler
-	function removeObject(object){
-		var selectedObject = scene.getObjectByName(object);
-		scene.remove(selectedObject);
-	}
-	
-	function genderHandler() {
-		// switching gender for male from true to false and visa versa when button is pushed
-		maleModel = !maleModel;
-		if (maleModel == false) {
-			removeObject("maleModel");
-			addFemaleModel();
-		} else {	
-			removeObject("femaleModel");
-			addMaleModel();
-		}
-	}
-	
-	//window resize function
-	function onWindowResize() {
-		camera.aspect = window.innerWidth / window.innerHeight;
-		camera.updateProjectionMatrix();
-		renderer.setSize(window.innerWidth, window.innerHeight );
-	}
-		
-	//render function	
-	function myRender(){
-		scene.rotation.y += targetRotation * .01;
-		renderer.render( scene, camera );
-		requestAnimationFrame( myRender );
-		targetRotation= 0;
-	}
-
-</script>
-
 </html>
-
