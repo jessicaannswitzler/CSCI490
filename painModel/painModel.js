@@ -9,11 +9,16 @@ var painLevelOrange = document.getElementById("painLevelOrange");
 var painLevelRed = document.getElementById("painLevelRed");
 var painLevelViolet = document.getElementById("painLevelViolet");
 var painModelDiv = document.getElementById("painModel");
+var frontModelImg = document.getElementById("frontModel");
+var backModelImg = document.getElementById("backModel");
+var imageBase = frontModel.getAttribute('src');
+window.addEventListener("load", Load);
+
 // Creating the mouse events for the pain level
-painLevelYellow.addEventListener( "mouseover" , function() { var faceYellow = document.getElementById("faceYellow");faceYellow.innerHTML = '<img class = "painImg" src = "painFaceYellow.png">';} , false);
-painLevelOrange.addEventListener( "mouseover" , function() {var faceOrange = document.getElementById("faceOrange");faceOrange.innerHTML = '<img class = "painImg" src = "painFaceOrange.png">';} , false);
-painLevelRed.addEventListener( "mouseover" , function() {var faceRed = document.getElementById("faceRed");faceRed.innerHTML = '<img class = "painImg" src = "painFaceRed.png">';} , false);
-painLevelViolet.addEventListener( "mouseover" , function() {var faceYellow = document.getElementById("faceViolet");faceViolet.innerHTML = '<img class = "painImg" src = "painFaceViolet.png">';} , false);
+painLevelYellow.addEventListener( "mouseover" , function() { var faceYellow = document.getElementById("faceYellow");faceYellow.innerHTML = '<img class = "painImg" src = "'+imageBase+'/painFaceYellow.png">';} , false);
+painLevelOrange.addEventListener( "mouseover" , function() {var faceOrange = document.getElementById("faceOrange");faceOrange.innerHTML = '<img class = "painImg" src = "'+imageBase+'/painFaceOrange.png">';} , false);
+painLevelRed.addEventListener( "mouseover" , function() {var faceRed = document.getElementById("faceRed");faceRed.innerHTML = '<img class = "painImg" src = "'+imageBase+'/painFaceRed.png">';} , false);
+painLevelViolet.addEventListener( "mouseover" , function() {var faceYellow = document.getElementById("faceViolet");faceViolet.innerHTML = '<img class = "painImg" src = "'+imageBase+'/painFaceViolet.png">';} , false);
 painLevelYellow.addEventListener( "mouseout" , function() {faceYellow.innerHTML = '';} , false);
 painLevelOrange.addEventListener( "mouseout" , function() {faceOrange.innerHTML = '';} , false);
 painLevelRed.addEventListener( "mouseout" , function() {faceRed.innerHTML = '';} , false);
@@ -25,16 +30,9 @@ var dirLight, dirLight2, spotlight, spotlight2;
 var targetRotation = 0, targetRotationOnMouseDown = 0;
 var mouseX = 0, mouseXOnMouseDown = 0; 
 var mouseY = 0, mouseYOnMouseDown = 0;
-var width= window.innerWidth * .75, height = window.innerHeight;
+var width= window.innerWidth * .75, height = window.innerHeight*.8;
 var maleModel = true;
-//detecting if the browser is WebGL compatible
-if (Detector.webgl){
-	init();
-	addMaleModel();
-	myRender();
-} else {
-	nonWebGLInit();
-}
+
 // WebGL init
 function init(){
 	// Removing the image divs used in non-webGL compatabile init
@@ -82,8 +80,7 @@ function init(){
 }
 function nonWebGLInit() {
 	//setting up images to be loaded
-	frontModel.innerHTML = '<img src = "maleFront.png">';
-	backModel.innerHTML = '<img src = "maleBack.png">';
+	addMaleImage();
 	//adding event listener for gender button
 	genderButton.addEventListener('click', genderImageHandler, false);
 	//adding event listener for window resize
@@ -157,11 +154,11 @@ var onError = function(){
 //adding female model to the scene
 function addFemaleModel(){	
 	mtlLoader = new THREE.MTLLoader();
-	mtlLoader.load("femaleModel.mtl", function(materials) {
+	mtlLoader.load(imageBase+"femaleModel.mtl", function(materials) {
 		materials.preload(); 
 		loader.setMaterials(materials);
 		materials.name = "femalePainMaterial";
-		loader.load("femaleModel.obj", function(object) {
+		loader.load(imageBase+"femaleModel.obj", function(object) {
 			object.name = "femaleModel";
 			scene.add(object);
 		}, onProgress, onError);},onProgressMtl, onError);}		
@@ -169,10 +166,10 @@ function addFemaleModel(){
 function addMaleModel()
 {	
 	mtlLoader = new THREE.MTLLoader();
-	mtlLoader.load("maleModel.mtl", function(materials) {
+	mtlLoader.load(imageBase+"maleModel.mtl", function(materials) {
 		materials.preload(); 
 		loader.setMaterials(materials);
-		loader.load("maleModel.obj", function(object) {
+		loader.load(imageBase+"maleModel.obj", function(object) {
 			object.name = "maleModel";
 			scene.add(object);
 		}, onProgress, onError);},onProgressMtl, onError);
@@ -184,12 +181,12 @@ function removeObject(object){
 }
 //adding images to the divs if WebGL is unavailable
 function addMaleImage() {
-	frontModel.innerHTML = '<img src = "maleFront.png">';
-	backModel.innerHTML = '<img src = "maleBack.png">'
+	frontModelImg.setAttribute('src', imageBase + 'maleFront.png');
+	backModelImg.setAttribute('src', imageBase + 'maleBack.png');
 }
 function addFemaleImage() {
-	frontModel.innerHTML = '<img src = "femaleFront.png">';
-	backModel.innerHTML = '<img src = "femaleBack.png">';
+	frontModelImg.setAttribute('src', imageBase + 'femaleFront.png');
+	backModelImg.setAttribute('src', imageBase + 'femaleBack.png');
 }
 //adding button handler for gender switch for WebGL capable browsers
 function genderHandler() {
@@ -207,16 +204,28 @@ function genderHandler() {
 function genderImageHandler() {
 	// switching gender for male from true to false and visa versa when button is pushed
 	maleModel = !maleModel;
+	frontModelImg.setAttribute('src', "");
+	backModelImg.setAttribute('src', "");
 	if (maleModel == false) {
-		frontModel.innerHTML = "";
-		backModel.innerHTML = "";
 		addFemaleImage();
 	} else {
-		frontModel.innerHTML = "";
-		backModel.innerHTML = "";
 		addMaleImage();
 	}
 }
+function Load()
+{
+	imageBase=frontModelImg.getAttribute("src");
+	//detecting if the browser is WebGL compatible
+	if (Detector.webgl){
+		init();
+		addMaleModel();
+		myRender();
+	} else {
+		nonWebGLInit();
+	}
+		console.log(imageBase);
+		nonWebGLInit();
+	}
 //window resize function
 function onWindowResize() {
 	mainContainer.setAttribute("style" , "width: " + window.innerWidth + "px; height: " + window.innerHeight + "px;");
