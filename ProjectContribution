@@ -1,0 +1,27 @@
+Project Contributions:
+Since we used a framework the majority of our work was developed locally. This means that our github contributions doesn’t accurately 
+reflect the work each of us has done. The following is an outline of each teammates individual additions to the project:
+
+Colin:
+•	Decide on backend language
+•	Decide on and set up framework
+•	Login
+•	Linked in CSS to framework
+•	Upload functionality 
+•	Database for artists
+•	Security
+Jessica: 
+•	Main contact point for client
+•	3d pain model
+•	Login
+•	Helped link in CSS to framework
+•	Auto-populating gallery
+•	Contact Form
+•	Hosted site
+•	Upload and Login based on session data
+•	Finalized CSS
+Ben:
+•	CSS
+•	Google API
+•	Main Page Gallery
+•	Website layout
