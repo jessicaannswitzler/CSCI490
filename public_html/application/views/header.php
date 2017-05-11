@@ -63,10 +63,10 @@
                 </button>
 				<ul class="nav pull-right">
 				  <li style="padding-top:5px;" id="menuLogin">
-					<a href="<?php echo base_url();?>index.php/main/login" id="navLogin" style= "color: white;">Login</a>
+					<a href="<?php echo base_url();?>index.php/main/login" id="navLogin" style= "color: white;"></a>
 					<div class="dropdown-menu" style="padding:17px;">
 						<button type="button" id="btnLogin" class="btn">Login</button>
-					  </form>
+					  
 					</div>
 				  </li>
 				</ul>

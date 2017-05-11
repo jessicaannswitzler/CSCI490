@@ -31,16 +31,16 @@
 					<p>
 						<ul class = "careList">
 							<li> Make sure you eat before you come in for your appointment.</li>
-							<li> The area that you want to tattoo must be clean.</li>
-							<li> We recommend that if the area you want to tattoo is prone to dry skin, for a few days following up 
-							to your appointment use and exfoliating body was and try to remove as much dead/dry skin as possible.</li>
+							<li> The area that you want to recieve a tattoo on must be clean.</li>
+							<li> We recommend that if the area you want to tattoo is prone to dry skin, that for a few days following up 
+							to your appointment use an exfoliating body wash and try to remove as much dead/dry skin as possible.</li>
 							<li> If you are sick please call to reschedule your appointment.</li>
-							<li> Make sure you have any reference materials printed out andd ready for you artist.</li>
+							<li> Make sure you have any reference materials printed out and ready for you artist.</li>
 							<li> Make sure you show up to your appointment on time. Keep in mind that your tattoo artist could be running
 							behind or ahead of schedule. Be considerate if you have to wait a little bit.</li>
 							<li> We do not recommend that you drink a lot of caffeine before your tattoo because it can thin your blood.</li>
 							<li> We also don't recomend that you take ibuprofen or advil prior to getting a tattoo because it also thins your blood.</li>
-							<li> UNDER NO CONDITION WILL WE TATTOO YOU IF YOU ARE UNDER THE INFLUENCE OF ALCOHOL OR ANY OTHER DRUG</li>
+							<li> UNDER NO CONDITION WILL WE TATTOO YOU IF YOU ARE UNDER THE INFLUENCE OF ALCOHOL OR ANY OTHER DRUGS</li>
 						</ul>
 					</p>
 				  
@@ -50,7 +50,7 @@
 					 <p>
 						<ul class = "careList">
 							<li> We will bandage your tattoo after completing it.
-							you can remove the bandage 4-6 hours after leaving the tattoo shop.</li>
+							You can remove the bandage 4-6 hours after leaving the tattoo shop.</li>
 							<li> Before touching your tattoo WASH YOUR HANDS!</li>
 							<li> When you're removing your bandage if it is stuck to your tatoo
 							get in the shower and let the water soak the bandage. This will help 
@@ -63,8 +63,8 @@
 							<li> Repeat washing and applying ointment 4 times a day for the first 2 days.</li>
 							<li> Your tattoo may scab up and start to peel. LEAVE IT ALONE! DON'T PEEL OR SCRATCH YOUR TATTOO.</li>
 							<li> After 2-3 days, stop washing your tattoo. Begin applying Lubriderm or Curel lotion as needed to keep your tattoo moist.</li>
-							<li> Continue appling lotion as needed until your tattoo has completely healed and has stopped peeling.</li>
-							<li> If pimples appear in the area where the ointment is applied, DO NOT pop them. Stop using the ointment</li>
+							<li> Continue applying lotion as needed until your tattoo has completely healed and has stopped peeling.</li>
+							<li> If pimples appear in the area where the ointment is applied, DO NOT pop them. Stop using the ointment.</li>
 							<li> DO NOT expose your tattoo to direct sunlight until it is FULLY healed. If so, it may fade your tatoo.</li>
 							<li> DO NOT use sunblock until your tattoo has completely healed.</li>
 							<li> DO NOT go swimming, at all, until your tattoo has completely healed!</li>
