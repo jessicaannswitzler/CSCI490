@@ -19,6 +19,9 @@ Jessica:
 •	Contact Form
 •	Hosted site
 •	Upload and Login based on session data
+°	Added password change functionality
+°	Dealt with logging out users when traveling off login pages
+°	Pages for logged in users
 •	Finalized CSS
 Ben:
 •	CSS
