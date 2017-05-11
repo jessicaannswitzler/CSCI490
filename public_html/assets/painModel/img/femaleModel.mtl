@@ -1,0 +1,24 @@
+# Blender MTL File: 'None'
+# Material Count: 2
+
+newmtl Material.001_femalePainModelTexture.png.001
+Ns 192.156863
+Ka 1.000000 1.000000 1.000000
+Kd 0.723042 0.723042 0.723042
+Ks 0.000515 0.000515 0.000515
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd https://50shadesofpain.000webhostapp.com/assets/painModel/img/femalePainModelTexture.png
+
+newmtl Material.002
+Ns 192.156863
+Ka 1.000000 1.000000 1.000000
+Kd 0.626662 0.626662 0.626662
+Ks 0.014669 0.014669 0.014669
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd https://50shadesofpain.000webhostapp.com/assets/painModel/img/femalePainModelTexture.png

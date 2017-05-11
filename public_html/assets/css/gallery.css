@@ -1,0 +1,137 @@
+
+img{
+  max-width: 100%;
+  max-height: 100%;
+}
+.galrow > .galcolumn {
+  padding: 0 0px;
+}
+.galrow {
+	padding-left: 2%;
+	padding-right: 2%;
+	margin-right: -15px;
+	margin-left: -15px;
+  padding-bottom: 2%;
+	background-color: black;
+  overflow: hidden;
+}
+
+.galrow:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.galcolumn {
+  float: left;
+  display: inline-block;
+  text-align: center;
+  max-width: 18%;
+  height: 150px;
+  margin-right: 1%;
+  margin-left: 1%;
+  margin-top:2%;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+  max-width: 1200px;
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  position: absolute;
+  top: 100px;
+  right: 25px;
+  font-size: 35px;
+  font-weight: bold;
+  opacity: 1;
+  z-index: 2;
+}
+
+.close:hover,
+.close:focus {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.mySlides {
+  display: none;
+  background-color: black;
+  text-align: center;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+} 
+
+
+.active,
+.demo:hover {
+  opacity: 1;
+}
+
+img.hover-shadow {
+  transition: 0.1s
+}
+
+.hover-shadow:hover {
+  z-index: 2;
+  box-shadow: 0px 0px 30px #ffffff;
+}
